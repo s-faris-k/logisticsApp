@@ -1,0 +1,18 @@
+
+
+<%# <%= form_with(model: @vehicle) do |form| %> 
+<table class="table table-borderless">
+      <tr>
+        <th><%= form.label :name, style: "display: block", class: "form-label" %></th>
+      <tr>
+        <td><%= form.text_field :name, class: "form-control" %></td>
+      
+      <tr>
+        <th><%= form.label :contact, style: "display: block", class: "form-label" %></th>
+      <tr>
+        <td><%= form.text_field :contact, class: "form-control" %></td>
+      
+      <tr>
+        <td colspan="2" class="text-center"><%= form.submit "Create Driver", class: "btn btn-success" %></td>
+      </tr>
+    </table>

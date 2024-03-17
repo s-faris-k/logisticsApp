@@ -1,0 +1,15 @@
+<h1>New driver</h1>
+
+
+<div class="container">
+  <%# <%= form_with model: @driver, url: create_driver_path(@driver), method: :post, local: true do |form| %>
+  <%= form_with model: @driver, url: create_driver_path(@driver), method: :post, local: true do |form| %>
+    <%= render partial: 'driverTable', locals: { form: form } %>
+  <% end %>
+</div>
+
+
+
+<div>
+   <%= link_to "Back to drivers", drivers_path %>
+</div>

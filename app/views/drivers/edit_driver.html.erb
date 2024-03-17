@@ -1,0 +1,14 @@
+<h1>Editing vehicle</h1>
+
+
+
+
+<div class="container">
+  <%= form_with model: @driver, url: update_driver_path, method: :patch, local: true do |form| %>
+  <%= render partial: 'driverTable', locals: { form: form } %>
+  <% end %>
+</div>
+
+<div>
+  <%= link_to "Back to Driver", drivers_path %>
+</div>

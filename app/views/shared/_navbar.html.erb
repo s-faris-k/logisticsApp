@@ -1,0 +1,47 @@
+<nav class="navbar navbar-expand-lg" style="background-color: #e3f2fd;">
+  <div class="container-fluid">
+  
+    <%= link_to "HOME", root_path, class: "navbar-brand" %>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <%= link_to "Vehicles", vehicles_path, class: "nav-link active" %> 
+        </li>
+
+      </ul>
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <%= link_to "Drivers", drivers_path, class: "nav-link active" %> 
+        </li>
+      </ul>
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <%= link_to "Clients", clients_path , class: "nav-link active" %> 
+        </li>
+      </ul>
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <%= link_to "Expenses", expenses_path , class: "nav-link active" %> 
+        </li>
+      </ul>
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <%= link_to "Trips", trips_path, class: "nav-link active" %> 
+        </li>
+      </ul>
+      <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <!-- Corrected syntax for displaying wallet balance -->
+          <%# <p class="nav-link active">Wallet balance: <%= @user.wallet.balance %> </p> 
+         
+        </li>
+        <li class="nav-item">
+          <%# <%= link_to "Logout", logout_path, class: "nav-link active" %> 
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>

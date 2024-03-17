@@ -1,0 +1,16 @@
+<%# <%= form_with(model: @vehicle) do |form| %> 
+<table class="table table-borderless">
+      <tr>
+        <th><%= form.label :number, style: "display: block", class: "form-label" %></th>
+      <tr>
+        <td><%= form.text_field :number, class: "form-control" %></td>
+      
+      <tr>
+        <th><%= form.label :model, style: "display: block", class: "form-label" %></th>
+      <tr>
+        <td><%= form.text_field :model, class: "form-control" %></td>
+      
+      <tr>
+        <td colspan="2" class="text-center"><%= form.submit "Create Vehicle", class: "btn btn-success" %></td>
+      </tr>
+    </table>
