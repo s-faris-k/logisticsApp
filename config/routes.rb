@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  resources :trips
+  # resources :trips
   resources :expenses
   resources :clients
   # resources :drivers
@@ -23,8 +23,13 @@ Rails.application.routes.draw do
   delete "delete_driver/:id", to: "drivers#delete_driver", as: :delete_driver
   post "create_driver", to: "drivers#create_driver", as: :create_driver
 
-
-
+  get "trips", to: "trips#index"
+  get "new_trip", to: "trips#new_trip" 
+  post "create_trip", to: "trips#create_trip", as: :create_trip
+  get "edit_trip/:id", to: "trips#edit_trip", as: :edit_trip
+  patch "update_trip/:id", to: "trips#update_trip", as: :update_trip
+  delete "delete_trip/:id", to: "trips#delete_trip", as: :delete_trip
+  
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

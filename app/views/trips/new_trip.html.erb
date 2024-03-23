@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Add Trip Details</title>
+</head>
+<body>
+
+<h2>Trip Details Form</h2>
+<div class="table-responsive">
+<form id="trip-form">
+  <table id="trip-table" class="table table-hover">
+    <thead>
+    <tr>
+      <th>Date</th>
+      <th>Driver</th>
+      <th>Client</th>
+      <th>Vehicle</th>
+      <th>Start</th>
+      <th>End</th>
+      <th>Total</th>
+      <th>Close Date</th>
+    </tr>
+    <thead>
+  </table>
+
+  <button type="button" onclick="addRow()">Add Row</button>
+  <button type="button" onclick="submitForm()">Add Details</button>
+</form>
+<div>
+ <script>
+   function addRow() {
+    var table = document.getElementById('trip-table');
+    var newRow = table.insertRow(-1);
+    var cellCount = table.rows[0].cells.length;
+    console.log("Table width:", table.offsetWidth);
+    console.log("cell count:", cellCount);
+    console.log("Table width:", table.offsetWidth/cellCount);
+
+    // Calculate the width for each column based on the table width
+    var columnWidth = table.offsetWidth / cellCount;
+    console.log("Cell width before adding row:", columnWidth);
+
+    for (var i = 0; i < cellCount; i++) {
+        var cell = newRow.insertCell(i);
+        var input = document.createElement('input');
+        input.type = i === 0 || i === cellCount - 1 ? 'date' : 'text';
+        if (i === cellCount - 3) { // "Start" column
+            input.addEventListener('change', calculateTotal);
+        } else if (i === cellCount - 2) { // "End" column
+            input.addEventListener('change', calculateTotal);
+        }
+        cell.appendChild(input);
+        // Set fixed width for each cell
+        cell.style.width = (columnWidth) + 'px';
+        input.style.width = '100%';
+        // Log the width of the input element
+        console.log("Width of input in row " + (table.rows.length - 1) + ", cell " + i + ":", input.offsetWidth);
+        console.log("Width of cell in row " + (table.rows.length - 1) + ", cell " + i + ":", cell.offsetWidth);
+    }
+
+    // Print the table width to the console after adding rows
+    console.log("Table width after adding rows:", table.offsetWidth);
+    
+}
+
+
+
+
+
+ function calculateTotal() {
+  var table = document.getElementById('trip-table');
+  var rows = table.rows;
+  
+  for (var i = 1; i < rows.length; i++) {
+    var row = rows[i];
+    var startInput = row.cells[4].querySelector('input');
+    var endInput = row.cells[5].querySelector('input');
+    
+    // Parse start and end values as numbers
+    var start = parseFloat(startInput.value);
+    var end = parseFloat(endInput.value);
+
+    // Check if start and end are valid numbers
+    if (!isNaN(start) && !isNaN(end)) {
+      // Calculate total as sum of start and end
+      var total = end-start;
+      // Update total input field with total kilometers
+      row.cells[6].querySelector('input').value = total;
+    } else {
+      // Clear total input field if start or end is not a valid number
+      row.cells[6].querySelector('input').value = '';
+    }
+  }
+}
+
+
+function submitForm() {
+  var table = document.getElementById('trip-table');
+  var rows = table.rows;
+  var tripDetails = [];
+
+  // Start from index 1 to skip the header row
+  for (var i = 1; i < rows.length; i++) {
+    var row = rows[i];
+    var trip = {};
+
+    trip['start_date'] = row.cells[0].querySelector('input').value;
+    trip['driver'] = row.cells[1].querySelector('input').value;
+    trip['client'] = row.cells[2].querySelector('input').value;
+    trip['vehicle'] = row.cells[3].querySelector('input').value;
+    trip['starting'] = row.cells[4].querySelector('input').value;
+    trip['ending'] = row.cells[5].querySelector('input').value;
+    trip['running'] = row.cells[6].querySelector('input').value;
+    trip['end_date'] = row.cells[7].querySelector('input').value;
+
+    tripDetails.push(trip);
+  }
+
+  // Now `tripDetails` contains all trip details as an array of hashes
+  console.log(tripDetails);
+
+  // Send `tripDetails` to your Rails controller using AJAX
+  fetch('/create_trip', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ tripDetails: tripDetails })
+  })
+  .then(response => {
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    return response.json();
+  })
+  .then(data => {
+    console.log(data);
+    alert(data.message);
+    window.location.href = '/trips'; // Redirect to root path on success
+  })
+  .catch(error => {
+    console.error('Error:', error);
+    window.location.reload(); // Reload the page on error
+  });
+}
+
+</script>
+
+</body>
+</html>
+
+<br>
+
+<div>
+  <%= link_to "Back to trips", trips_path %>
+</div>

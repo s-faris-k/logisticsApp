@@ -1,23 +1,19 @@
 class TripsController < ApplicationController
-  before_action :set_trip, only: %i[ show edit update destroy ]
+  before_action :set_trip, only: %i[ edit_trip update_trip delete_trip ]
   skip_before_action :verify_authenticity_token
 
   # GET /trips or /trips.json
   def index
     @trips = Trip.all
   end
-
-  # GET /trips/1 or /trips/1.json
-  def show
-  end
-
   # GET /trips/new
-  def new
+  def new_trip
     @trip = Trip.new
   end
 
   # GET /trips/1/edit
-  def edit
+  def edit_trip
+    @trips
   end
 
   # POST /trips or /trips.json
@@ -35,7 +31,7 @@ class TripsController < ApplicationController
 
   #   render json: { message: 'Trips created successfully' }
   # end
-  def create
+  def create_trip
     trip_details = trip_params[:tripDetails]
 
     # Iterate through each trip detail and create a new Trip record
@@ -47,20 +43,17 @@ class TripsController < ApplicationController
     render json: { message: 'Trips created successfully' }
   end
   # PATCH/PUT /trips/1 or /trips/1.json
-  def update
-    respond_to do |format|
-      if @trip.update(trip_params)
-        format.html { redirect_to trip_url(@trip), notice: "Trip was successfully updated." }
-        format.json { render :show, status: :ok, location: @trip }
+  def update_trip
+      if @trip.update(update_params)
+        redirect_to trips_path
       else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @trip.errors, status: :unprocessable_entity }
+        render :update_trip
       end
-    end
   end
+      
 
   # DELETE /trips/1 or /trips/1.json
-  def destroy
+  def delete_trip
     @trip.destroy
 
     respond_to do |format|
@@ -79,4 +72,9 @@ class TripsController < ApplicationController
     def trip_params
       params.permit(tripDetails: [:start_date, :driver, :client, :vehicle, :starting, :ending, :running, :end_date])
     end
+    def update_params
+      #params.permit(: [:start_date, :driver, :client, :vehicle, :starting, :ending, :running, :end_date])
+      params.require(:trip).permit(:start_date, :driver, :client, :vehicle, :starting, :ending, :running, :end_date)
+    end
+
 end

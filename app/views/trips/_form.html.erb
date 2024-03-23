@@ -1,57 +1,37 @@
-<%= form_with(model: trip) do |form| %>
-  <% if trip.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(trip.errors.count, "error") %> prohibited this trip from being saved:</h2>
-
-      <ul>
-        <% trip.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
-
-  <div>
-    <%= form.label :start_date, style: "display: block" %>
-    <%= form.date_field :start_date %>
-  </div>
-
-  <div>
-    <%= form.label :driver, style: "display: block" %>
-    <%= form.text_field :driver %>
-  </div>
-
-  <div>
-    <%= form.label :client, style: "display: block" %>
-    <%= form.text_field :client %>
-  </div>
-
-  <div>
-    <%= form.label :vehicle, style: "display: block" %>
-    <%= form.text_field :vehicle %>
-  </div>
-
-  <div>
-    <%= form.label :starting, style: "display: block" %>
-    <%= form.text_field :starting %>
-  </div>
-
-  <div>
-    <%= form.label :ending, style: "display: block" %>
-    <%= form.text_field :ending %>
-  </div>
-
-  <div>
-    <%= form.label :running, style: "display: block" %>
-    <%= form.text_field :running %>
-  </div>
-
-  <div>
-    <%= form.label :end_date, style: "display: block" %>
-    <%= form.date_field :end_date %>
-  </div>
-
-  <div>
-    <%= form.submit %>
-  </div>
-<% end %>
+<table class="table table-borderless" style="width: 50%;">
+  <tr>
+    <th><%= form.label :Trip_date, style: "display: block", class: "form-label" %></th>
+    <td><%= form.date_field :start_date, class: "form-control" %></td>
+  </tr>
+  <tr>
+    <th><%= form.label :Driver, style: "display: block", class: "form-label" %></th>
+    <td><%= form.text_field :driver, class: "form-control" %></td>
+  </tr>
+  <tr>
+    <th><%= form.label :Client, style: "display: block", class: "form-label" %></th>
+    <td><%= form.text_field :client, class: "form-control" %></td>
+  </tr>
+  <tr>
+    <th><%= form.label :Vehicle, style: "display: block", class: "form-label" %></th>
+    <td><%= form.text_field :vehicle, class: "form-control" %></td>
+  </tr>
+  <tr>
+    <th><%= form.label :Starting, style: "display: block", class: "form-label" %></th>
+    <td><%= form.text_field :starting, class: "form-control" %></td>
+  </tr>
+  <tr>
+    <th><%= form.label :Closing, style: "display: block", class: "form-label" %></th>
+    <td><%= form.text_field :ending, class: "form-control" %></td>
+  </tr>
+  <tr>
+    <th><%= form.label :Running, style: "display: block", class: "form-label" %></th>
+    <td><%= form.text_field :running, class: "form-control" %></td>
+  </tr>
+  <tr>
+    <th><%= form.label :Closed_On, style: "display: block", class: "form-label" %></th>
+    <td><%= form.date_field :end_date, class: "form-control" %></td>
+  </tr>
+  <tr>
+    <td colspan="2" class="text-center"><%= form.submit "Update Details", class: "btn btn-success" %></td>
+  </tr>
+</table>

@@ -2,13 +2,46 @@
 
 <h1>Trips</h1>
 
-<div id="trips">
-  <% @trips.each do |trip| %>
-    <%= render trip %>
-    <p>
-      <%= link_to "Show this trip", trip %>
-    </p>
-  <% end %>
-</div>
+<% if @trips.any? %>
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th scope="col">Date</th>
+        <th scope="col">Driver</th>
+        <th scope="col">Vehicle</th>
+        <th scope="col">Client</th>
+        <th scope="col">Starting</th>
+        <th scope="col">Closing</th>
+        <th scope="col">Running</th>
+        <th scope="col">Trip Closing</th>
 
-<%= link_to "New trip", new_trip_path %>
+      </tr>
+    </thead>
+    <tbody>
+      <% @trips.each do |trip| %>
+        <tr>
+          <td><%= trip.start_date %></td>
+          <td><%= trip.driver %></td>
+          <td><%= trip.vehicle %></td>
+          <td><%= trip.client %></td>
+          <td><%= trip.starting %></td>
+          <td><%= trip.ending %></td>
+          <td><%= trip.running %></td>
+
+          <td><%= trip.end_date %></td>
+          <td>
+            <%= link_to "Edit", edit_trip_path(trip.id), class: "btn btn-primary" %>
+            <td>
+          <%= button_to 'Delete', delete_trip_path(trip), method: :delete, class: 'btn btn-danger' %>
+
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <p>No Trips found.</p>
+<% end %>
+<div style="display: flex; justify-content: center;">
+  <%= link_to "Add Trips", new_trip_path, class: "btn btn-secondary" %>
+</div>
