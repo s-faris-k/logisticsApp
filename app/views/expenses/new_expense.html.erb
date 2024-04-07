@@ -1,0 +1,145 @@
+<h2>Add Expenses</h2>
+<div class="table-responsive">
+  <form id="expense-form">
+    <table id="expense-table" class="table table-hover">
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>item</th>
+          <th>amount</th>
+          <th>Driver</th>
+          <th>Vehicle</th>
+        </tr>
+      </thead>
+    </table>
+
+    <button type="button" onclick="addRow()">Add Row</button>
+    <button type="button" onclick="submitForm()">Add Details</button>
+  </form>
+</div>
+
+<script>
+  // Function to populate the driver dropdown
+  function populateDriverDropdown(selectId, drivers) {
+    var select = document.getElementById(selectId);
+
+    // Clear existing options
+    select.innerHTML = '<option value="">Select Driver</option>';
+
+    // Populate options for drivers
+    drivers.forEach(driver => {
+      var option = document.createElement('option');
+      option.value = driver.id; // Assuming 'id' is the attribute containing driver's id
+      option.text = driver.name; // Assuming 'name' is the attribute containing driver's name
+      select.appendChild(option);
+    });
+  }
+
+  // Function to populate the vehicle dropdown
+  function populateVehicleDropdown(selectId, vehicles) {
+    var select = document.getElementById(selectId);
+
+    // Clear existing options
+    select.innerHTML = '<option value="">Select Vehicle</option>';
+
+    // Populate options for vehicles
+    vehicles.forEach(vehicle => {
+      var option = document.createElement('option');
+      option.value = vehicle.id; // Assuming 'id' is the attribute containing vehicle's id
+      option.text = vehicle.number; // Assuming 'number' is the attribute containing vehicle's number
+      select.appendChild(option);
+    });
+  }
+
+  function addRow() {
+    var table = document.getElementById('expense-table');
+    var newRow = table.insertRow(-1);
+    var cellCount = table.rows[0].cells.length;
+
+    // Calculate the width for each column based on the table width
+    var columnWidth = table.offsetWidth / cellCount;
+
+    for (var i = 0; i < cellCount; i++) {
+      var cell = newRow.insertCell(i);
+      var input = document.createElement('input');
+      input.type = i === 0 ? 'date' : 'text';
+      if (i === 0) {
+        var today = new Date().toISOString().split('T')[0];
+        input.value = today;
+      }
+      cell.appendChild(input);
+      // Set fixed width for each cell
+      cell.style.width = (columnWidth) + 'px';
+      input.style.width = '100%';
+      // Log the width of the input element
+      console.log("Width of input in row " + (table.rows.length - 1) + ", cell " + i + ":", input.offsetWidth);
+      console.log("Width of cell in row " + (table.rows.length - 1) + ", cell " + i + ":", cell.offsetWidth);
+
+      // Check if this cell is for the "Driver" or "Vehicle" fields
+      if (i === 3) { // Index 3 is for "Driver"
+        cell.innerHTML = ''; // Clear the cell
+        var driverSelect = document.createElement('select');
+        driverSelect.id = 'driver-select-' + (table.rows.length - 1); // Unique ID for each select
+        populateDriverDropdown(driverSelect.id, drivers); // Populate the driver dropdown
+        cell.appendChild(driverSelect);
+      } else if (i === 4) { // Index 4 is for "Vehicle"
+        cell.innerHTML = ''; // Clear the cell
+        var vehicleSelect = document.createElement('select');
+        vehicleSelect.id = 'vehicle-select-' + (table.rows.length - 1); // Unique ID for each select
+        populateVehicleDropdown(vehicleSelect.id, vehicles); // Populate the vehicle dropdown
+        cell.appendChild(vehicleSelect);
+      }
+    }
+
+    // Print the table width to the console after adding rows
+    console.log("Table width after adding rows:", table.offsetWidth);
+  }
+
+  function submitForm() {
+    var table = document.getElementById('expense-table');
+    var rows = table.rows;
+    var expDetails = [];
+
+    // Start from index 1 to skip the header row
+    for (var i = 1; i < rows.length; i++) {
+      var row = rows[i];
+      var exp = {};
+
+      exp['date'] = row.cells[0].querySelector('input').value;
+      exp['item'] = row.cells[1].querySelector('input').value;
+      exp['amount'] = row.cells[2].querySelector('input').value;
+      exp['driver'] = row.cells[3].querySelector('select').value; // Get value of selected driver
+      exp['vehicle'] = row.cells[4].querySelector('select').value; // Get value of selected vehicle
+      expDetails.push(exp);
+    }
+
+    // Now `expDetails` contains all expense details as an array of hashes
+    console.log(expDetails);
+
+    // Send `expDetails` to your Rails controller using AJAX
+    fetch('/create_expense', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          expDetails: expDetails
+        })
+      })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then(data => {
+        console.log(data);
+        alert(data.message);
+        window.location.href = '/expenses'; // Redirect to root path on success
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        window.location.reload(); // Reload the page on error
+      });
+  }
+</script>

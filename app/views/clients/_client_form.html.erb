@@ -1,0 +1,14 @@
+
+<table class="table table-borderless" style="width: 50%;">
+  <tr>
+    <th><%= form.label :Name, style: "display: block", class: "form-label" %></th>
+    <td><%= form.text_field :name, class: "form-control" %></td>
+  </tr>
+  <tr>
+    <th><%= form.label :Contact, style: "display: block", class: "form-label" %></th>
+    <td><%= form.text_field :contact, class: "form-control" %></td>
+  </tr>
+    <tr>
+    <td colspan="2" class="text-center"><%= form.submit "Submit", class: "btn btn-success" %></td>
+  </tr>
+</table>

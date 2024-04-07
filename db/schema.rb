@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_03_02_184924) do
+ActiveRecord::Schema[7.0].define(version: 2024_03_23_183429) do
   create_table "clients", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name"
     t.string "contact"
@@ -32,8 +32,22 @@ ActiveRecord::Schema[7.0].define(version: 2024_03_02_184924) do
     t.bigint "vehicle_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.date "date"
     t.index ["driver_id"], name: "index_expenses_on_driver_id"
     t.index ["vehicle_id"], name: "index_expenses_on_vehicle_id"
+  end
+
+  create_table "trips", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.date "start_date"
+    t.string "driver"
+    t.string "client"
+    t.string "vehicle"
+    t.string "starting"
+    t.string "ending"
+    t.string "running"
+    t.date "end_date"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "vehicles", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|

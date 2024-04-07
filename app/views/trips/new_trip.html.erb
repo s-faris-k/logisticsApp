@@ -49,6 +49,10 @@
         } else if (i === cellCount - 2) { // "End" column
             input.addEventListener('change', calculateTotal);
         }
+        if (i === 0 || i ==cellCount - 1) {
+            var today = new Date().toISOString().split('T')[0];
+            input.value = today;
+        }
         cell.appendChild(input);
         // Set fixed width for each cell
         cell.style.width = (columnWidth) + 'px';

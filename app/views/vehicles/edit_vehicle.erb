@@ -1,8 +1,5 @@
 <h1>Editing vehicle</h1>
 
-
-
-
 <div class="container">
   <%= form_with model: @vehicle, url: update_vehicle_path, method: :patch, local: true do |form| %>
   <%= render partial: 'vehTable', locals: { form: form } %>

@@ -1,0 +1,15 @@
+<h1>Add Client</h1>
+
+
+<div class="container">
+  <%# <%= form_with model: @driver, url: create_driver_path(@driver), method: :post, local: true do |form| %>
+  <%= form_with model: @client, url: create_client_path(@client), method: :post, local: true do |form| %>
+    <%= render partial: 'client_form', locals: { form: form } %>
+  <% end %>
+</div>
+
+
+
+<div>
+   <%= link_to "Back to drivers", drivers_path %>
+</div>

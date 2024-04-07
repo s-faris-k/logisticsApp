@@ -1,60 +1,65 @@
 class ExpensesController < ApplicationController
-  before_action :set_expense, only: %i[ show edit update destroy ]
 
+  skip_before_action :verify_authenticity_token
+  before_action :set_expense, only: %i[ edit_expense update_expense delete_expense ]
+  
   # GET /expenses or /expenses.json
   def index
     @expenses = Expense.all
   end
 
-  # GET /expenses/1 or /expenses/1.json
-  def show
-  end
-
   # GET /expenses/new
-  def new
+  def new_expense
     @expense = Expense.new
   end
 
   # GET /expenses/1/edit
-  def edit
+  def edit_edpense
+
   end
 
   # POST /expenses or /expenses.json
-  def create
-    @expense = Expense.new(expense_params)
-
-    respond_to do |format|
-      if @expense.save
-        format.html { redirect_to expense_url(@expense), notice: "Expense was successfully created." }
-        format.json { render :show, status: :created, location: @expense }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @expense.errors, status: :unprocessable_entity }
-      end
+  # def create_expense
+  #   @expense = Expense.new(expense_params)
+  #     if @expense.save
+  #       redirect_to expenses_path
+  #     else
+  #       render :create_expense
+  #     end
+  #   end
+  def create_expense
+    exp_details = params[:expDetails]
+    exp_details.each do |exp|
+      expense = Expense.new(
+        date: exp['date'],
+        item: exp['item'],
+        amount: exp['amount'],
+        driver: exp['driver'],
+        vehicle: exp['vehicle']
+      )
+      expense.save
     end
+    # Your remaining logic
   end
+
 
   # PATCH/PUT /expenses/1 or /expenses/1.json
-  def update
-    respond_to do |format|
-      if @expense.update(expense_params)
-        format.html { redirect_to expense_url(@expense), notice: "Expense was successfully updated." }
-        format.json { render :show, status: :ok, location: @expense }
+  def update_expense
+      if @expense.update(update_exp_params)
+        redirect_to expenses_path
       else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @expense.errors, status: :unprocessable_entity }
+        render :update_expense
       end
     end
-  end
 
   # DELETE /expenses/1 or /expenses/1.json
-  def destroy
-    @expense.destroy
-
-    respond_to do |format|
-      format.html { redirect_to expenses_url, notice: "Expense was successfully destroyed." }
-      format.json { head :no_content }
+  def delete_expense
+    if @expense.destroy
+      message ="deleted"
+    else
+      message="error happened"
     end
+    redirect_to expenses_path
   end
 
   private
@@ -64,7 +69,11 @@ class ExpensesController < ApplicationController
     end
 
     # Only allow a list of trusted parameters through.
-    def expense_params
+    def update_exp_params
       params.require(:expense).permit(:item, :amount, :driver_id, :vehicle_id)
+    end
+
+    def expense_params
+      params.permit(expDetails: [:item, :amount, :driver, :vehicle, :date])
     end
 end

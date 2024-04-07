@@ -1,8 +1,5 @@
 <h1>Edit Trip Details </h1>
 
-
-
-
 <div class="container">
   <%= form_with model: @trip, url: update_trip_path, method: :patch, local: true do |form| %>
   <%= render partial: 'form', locals: { form: form } %>

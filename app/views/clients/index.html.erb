@@ -1,14 +1,36 @@
-<p style="color: green"><%= notice %></p>
+
 
 <h1>Clients</h1>
 
-<div id="clients">
-  <% @clients.each do |client| %>
-    <%= render client %>
-    <p>
-      <%= link_to "Show this client", client %>
-    </p>
-  <% end %>
-</div>
 
-<%= link_to "New client", new_client_path %>
+<% if @clients.any? %>
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th scope="col">Name</th>
+        <th scope="col">Contact</th>
+        <th scope="col"></th>
+        <th scope="col"></th>
+
+      </tr>
+    </thead>
+    <tbody>
+      <% @clients.each do |client| %>
+        <tr>
+          <td><%= client.name %></td>
+          <td><%= client.contact %></td>
+          <td>
+            <%= link_to "Edit", edit_client_path(client.id), class: "btn btn-primary"%>
+            <td>
+             <%= button_to 'Delete', delete_client_path(client), method: :delete, class: 'btn btn-danger' %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <p>No Clinets found.</p>
+<% end %>
+<div style="display: flex; justify-content: center;">
+  <%= link_to "Add Client", new_client_path, class: "btn btn-secondary" %>
+</div>
