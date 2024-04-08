@@ -12,7 +12,6 @@
         <th scope="col">amount</th>
         <th scope="col">Driver</th>
         <th scope="col">Vehicle</th>
-        <th scope="col">amount</th>
         <th scope="col"></th>
         <th scope="col"></th>
 
@@ -24,8 +23,10 @@
           <td><%= expense.date %></td>
           <td><%= expense.item %></td>
           <td><%= expense.amount %></td>
-          <td><%= expense.driver_id %></td>
-          <td><%= expense.vehicle_id %></td>
+          <td><% driver = Driver.find_by(id: expense.driver_id) %>
+              <%= driver.present? ? driver.name : 'Unknown' %>  </td>
+          <td><% vehicle = Vehicle.find_by(id: expense.vehicle_id) %>
+              <%= vehicle.present? ? vehicle.number : 'Unknown' %>  </td>
           <td>
             <%= link_to "Edit", edit_expense_path(expense.id), class: "btn btn-primary"%>
             <td>

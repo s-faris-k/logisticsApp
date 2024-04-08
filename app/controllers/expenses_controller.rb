@@ -11,6 +11,8 @@ class ExpensesController < ApplicationController
   # GET /expenses/new
   def new_expense
     @expense = Expense.new
+    @driver=Driver.all
+    @vehicle=Vehicle.all
   end
 
   # GET /expenses/1/edit
@@ -30,18 +32,22 @@ class ExpensesController < ApplicationController
   def create_expense
     exp_details = params[:expDetails]
     exp_details.each do |exp|
+      driver_id = exp['driver'].present? ? exp['driver'] : nil
+      vehicle_id = exp['vehicle'].present? ? exp['vehicle'] : nil
+      driver = Driver.find_by(id: driver_id)
+      vehicle = Vehicle.find_by(id: vehicle_id)
       expense = Expense.new(
         date: exp['date'],
         item: exp['item'],
         amount: exp['amount'],
-        driver: exp['driver'],
-        vehicle: exp['vehicle']
+        driver: driver,
+        vehicle: vehicle
       )
       expense.save
     end
-    # Your remaining logic
+    render json: { message: 'Expenses created successfully' }
   end
-
+  
 
   # PATCH/PUT /expenses/1 or /expenses/1.json
   def update_expense

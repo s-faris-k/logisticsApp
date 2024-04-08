@@ -1,0 +1,27 @@
+<table class="table table-borderless" style="width: 50%;">
+  <tr>
+    <th><%= form.label :date, style: "display: block", class: "form-label" %></th>
+    <td><%= form.date_field :date, class: "form-control" %></td>
+  </tr>
+  <tr>
+    <th><%= form.label :item, style: "display: block", class: "form-label" %></th>
+    <td><%= form.text_field :item, class: "form-control" %></td>
+  </tr>
+  <tr>
+    <th><%= form.label :amount, style: "display: block", class: "form-label" %></th>
+    <td><%= form.text_field :amount, class: "form-control" %></td>
+  </tr>
+  <tr>
+    <th><%= form.label :driver_id, style: "display: block", class: "form-label" %></th>
+
+    <td><%= form.collection_select(:driver_id, Driver.all, :id, :name) %></td>
+  </tr>
+  <tr>
+    <th><%= form.label :vehicle_id, style: "display: block", class: "form-label" %></th>
+    <td><%= form.collection_select(:vehicle_id, Vehicle.all, :id, :number) %></td>
+  </tr>
+  
+  <tr>
+    <td colspan="2" class="text-center"><%= form.submit "Update Details", class: "btn btn-success" %></td>
+  </tr>
+</table>
