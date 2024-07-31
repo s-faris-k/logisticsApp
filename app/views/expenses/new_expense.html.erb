@@ -9,12 +9,14 @@
           <th>amount</th>
           <th>Driver</th>
           <th>Vehicle</th>
+          <th></th>
         </tr>
       </thead>
     </table>
 
-    <button type="button" onclick="addRow()">Add Row</button>
-    <button type="button" onclick="submitForm()">Add Details</button>
+
+    <button type="button" onclick="addRow()" class ="btn btn-secondary">Add Row</button>
+    <button type="button" onclick="submitForm()" class="btn btn-success">Add Details</button>
   </form>
 </div>
 
@@ -32,7 +34,7 @@ function addRow() {
     // Calculate the width for each column based on the table width
     var columnWidth = table.offsetWidth / cellCount;
 
-    for (var i = 0; i < cellCount; i++) {
+    for (var i = 0; i < cellCount-1; i++) {
         var cell = newRow.insertCell(i);
         var input = document.createElement('input');
         input.type = i === 0 ? 'date' : 'text';
@@ -135,4 +137,7 @@ function populateDropdownvehicles(select, options) {
         window.location.reload(); // Reload the page on error
       });
   }
+  document.addEventListener('DOMContentLoaded', function() {
+    addRow();
+});
 </script>
