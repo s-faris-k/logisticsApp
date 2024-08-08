@@ -11,21 +11,21 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema[7.0].define(version: 2024_04_07_075416) do
-  create_table "clients", charset: "utf8mb4", force: :cascade do |t|
+  create_table "clients", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name"
     t.string "contact"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "drivers", charset: "utf8mb4", force: :cascade do |t|
+  create_table "drivers", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name"
     t.string "contact"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "expenses", charset: "utf8mb4", force: :cascade do |t|
+  create_table "expenses", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "item"
     t.decimal "amount", precision: 10
     t.bigint "driver_id"
@@ -37,7 +37,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_04_07_075416) do
     t.index ["vehicle_id"], name: "index_expenses_on_vehicle_id"
   end
 
-  create_table "trips", charset: "utf8mb4", force: :cascade do |t|
+  create_table "trips", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.date "start_date"
     t.string "driver"
     t.string "client"
@@ -50,7 +50,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_04_07_075416) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "vehicles", charset: "utf8mb4", force: :cascade do |t|
+  create_table "vehicles", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "number"
     t.string "model"
     t.datetime "created_at", null: false

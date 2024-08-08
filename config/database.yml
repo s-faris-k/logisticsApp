@@ -32,8 +32,7 @@ development:
 production:
   <<: *default
 
-development:
-  <<: *default
+
   # database: nrbApp
 
 # Warning: The database defined as "test" will be erased and
