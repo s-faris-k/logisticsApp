@@ -8,6 +8,9 @@ default: &default
   port: <%= ENV['MYSQLPORT'] || 3306 %>
   database: <%= ENV['MYSQLDATABASE'] || 'railway' %>
 
+
+  
+
 development:
   <<: *default
   database: myapp_development
@@ -18,4 +21,4 @@ test:
 
 production:
   <<: *default
-  database: <%= ENV['MYSQL_DATABASE'] || 'railway' %>
+  url: <%= ENV["MYSQL_URL"] %>
