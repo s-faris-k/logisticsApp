@@ -7,16 +7,16 @@ default: &default
   host: <%= ENV['DB_HOST'] %>
   port: <%= ENV['DB_PORT'] || 14906 %>
   ssl_mode: REQUIRED
-  database: defaultdb
+  database: <%= ENV['DATABASE'] %>
 
 development:
   <<: *default
-  database: defaultdb
+ 
 
 test:
   <<: *default
-  database: defaultdb_test
+  database: <%= ENV['DATABASE'] %>_test
 
 production:
   <<: *default
-  database: defaultdb_prod
+  database: <%= ENV['DATABASE'] %>_prod
