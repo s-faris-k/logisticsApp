@@ -2,21 +2,21 @@ default: &default
   adapter: mysql2
   encoding: utf8
   pool: 5
-  username: <%= ENV['DB_USERNAME'] %>
-  password: <%= ENV['DB_PASSWORD'] %>
-  host: <%= ENV['DB_HOST'] %>
-  port: <%= ENV['DB_PORT'] || 14906 %>
+  username: avnadmin
+  password: AVNS_fYUd4tlARNsh97hD4rT
+  host: mysql-salman-logiapp.g.aivencloud.com
+  port: 14906
   ssl_mode: REQUIRED
-  database: <%= ENV['DATABASE'] %>
+  database: defaultdb
 
 development:
   <<: *default
- 
+  database: defaultdb
 
 test:
   <<: *default
-  database: <%= ENV['DATABASE'] %>_test
+  database: defaultdb_test
 
 production:
   <<: *default
-  database: <%= ENV['DATABASE'] %>_prod
+  database: defaultdb_prod
