@@ -16,11 +16,8 @@ RUN bundle install
 # Copy the rest of the application code
 COPY . .
 
-#running pending migrations
-Run rails db:migrate
-
-# Precompile assets
-# RUN RAILS_ENV=production bundle exec rake assets:precompile
+# Running pending migrations
+RUN rails db:migrate
 
 # Expose the port the app runs on
 EXPOSE 3000
