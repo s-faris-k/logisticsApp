@@ -1,0 +1,26 @@
+
+
+services:
+  db:
+    image: mysql:5.7
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: "root"
+      MYSQL_DATABASE: ${DATABASE_NAME}
+    volumes:
+      - db_data:/var/lib/mysql
+
+  web:
+    build: .
+    command: bash -c "rm -f tmp/pids/server.pid && bin/rails db:migrate && rails server -b 0.0.0.0"
+    volumes:
+      - .:/myapp
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+    environment:
+      DATABASE_URL: mysql2://${DATABASE_USER}:${DATABASE_PASSWORD}@db/${DATABASE_NAME}
+
+volumes:
+  db_data:

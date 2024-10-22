@@ -16,8 +16,10 @@
   <body>
     
     <%= render partial:'shared/navbar' %>
-    <div class="container align-items-center mt-5 ">
+    <div class="wrapper">
+    <div class="container-fluid">
     <%= yield %>
+    </div>
     </div>
   </body>
 </html>

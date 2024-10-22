@@ -5,8 +5,9 @@ Rails.application.routes.draw do
   # resources :drivers
   # resources :vehicles
  
-  root 'main#home'
+  root "login", controller: :main, action: :login
   get "home", to: "main#home"
+  get "login", controller: :main, action: :login
 
   get "vehicles", to: "vehicles#index"
   get "new_vehicle", to: "vehicles#new"

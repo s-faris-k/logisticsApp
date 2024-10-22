@@ -1,24 +1,22 @@
 default: &default
   adapter: mysql2
   encoding: utf8
-  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-  username: <%= ENV['MYSQLUSER'] || 'root' %>
-  password: <%= ENV['MYSQLPASSWORD'] || 'AwfbIvAWOYOYSgyxHphHjeDeMKUgnFwv' %>
-  host: <%= ENV['MYSQLHOST'] || ENV['RAILWAY_PRIVATE_DOMAIN'] %>
-  port: <%= ENV['MYSQLPORT'] || 3306 %>
-  database: <%= ENV['MYSQLDATABASE'] || 'railway' %>
-
-
-  
+  pool: 5
+  username: <%= ENV['DATABASE_USER'] %>
+  password: <%= ENV['DATABASE_PASSWORD'] %>
+  host: 127.0.0.1
+  port: 3306
 
 development:
   <<: *default
-  database: myapp_development
+  database: <%= ENV['DATABASE_NAME'] %>
 
 test:
   <<: *default
-  database: myapp_test
+  database: <%= ENV['DATABASE_NAME'] %>_test
 
 production:
   <<: *default
-  url: <%= ENV["MYSQL_URL"] %>
+  database: <%= ENV['DATABASE_NAME'] %>
+  username: <%= ENV['DATABASE_USER'] %>
+  password: <%= ENV['DATABASE_PASSWORD'] %>
